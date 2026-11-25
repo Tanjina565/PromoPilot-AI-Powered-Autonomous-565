@@ -1,0 +1,14 @@
+{% extends "base.html" %}{% block body %}
+<div class="head"><div><h1>{{ b.name }}</h1><p class="muted">{{ b.category }} · {{ b.language }} · {{ b.tone }}</p></div><a class="btn" href="{{ url_for('product_form', bid=b.id) }}">Add product</a></div>
+<div class="two">
+<form class="card" method="post" action="{{ url_for('business_settings', bid=b.id) }}"><h3>Publishing</h3>
+<label>Facebook Page name <small class="muted">(demo connection)</small><input name="fb_page" value="{{ b.fb_page }}" placeholder="Your Facebook Page"></label>
+<label class="check"><input type="checkbox" name="auto_publish" {{ 'checked' if b.auto_publish }}> Auto-publish approved posts</label>
+<p class="muted">With auto-publish off, you schedule each approved post yourself.</p><button class="btn">Save settings</button></form>
+<form class="card" method="post" enctype="multipart/form-data" action="{{ url_for('product_import', bid=b.id) }}"><h3>Import products from CSV</h3>
+<p class="muted">Columns: name, description, price, category, image</p><input type="file" name="csv" accept=".csv" required><br><button class="btn">Import CSV</button></form></div>
+<table><tr><th>Product</th><th>Price</th><th>Category</th><th>Stock</th><th></th></tr>
+{% for p in items %}<tr><td><b>{{ p.name }}</b><br><small class="muted">{{ p.description }}</small></td><td>৳{{ '%.0f'|format(p.price) }}</td><td>{{ p.category }}</td><td>{{ 'In stock' if p.in_stock else 'Out' }}</td>
+<td class="acts"><a class="btn ghost" href="{{ url_for('generate', product_id=p.id) }}">Write post</a><a class="btn ghost" href="{{ url_for('product_form', pid=p.id) }}">Edit</a>
+<form method="post" action="{{ url_for('product_delete', pid=p.id) }}" onsubmit="return confirm('Delete product?')"><button class="btn danger">Delete</button></form></td></tr>
+{% else %}<tr><td colspan="5" class="empty">No products yet. Add one or import a CSV.</td></tr>{% endfor %}</table>{% endblock %}

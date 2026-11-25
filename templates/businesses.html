@@ -1,0 +1,7 @@
+{% extends "base.html" %}{% block body %}
+<div class="head"><h1>Businesses</h1><a class="btn" href="{{ url_for('business_new') }}">Add business</a></div>
+{% for b in items %}<div class="card row"><div><h3><a href="{{ url_for('products', bid=b.id) }}">{{ b.name }}</a></h3>
+<p class="muted">{{ b.category }} · {{ b.language }} · {{ b.tone }} tone · Facebook: {{ b.fb_page or 'not connected' }}</p></div>
+<div class="acts"><a class="btn ghost" href="{{ url_for('products', bid=b.id) }}">Products</a><a class="btn ghost" href="{{ url_for('business_new', bid=b.id) }}">Edit</a>
+<form method="post" action="{{ url_for('business_delete', bid=b.id) }}" onsubmit="return confirm('Delete this business and all its products and posts?')"><button class="btn danger">Delete</button></form></div></div>
+{% else %}<div class="card empty">No business yet. Add one to start generating content.</div>{% endfor %}{% endblock %}

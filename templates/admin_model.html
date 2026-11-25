@@ -1,0 +1,5 @@
+{% extends "base.html" %}{% block body %}<h1>Model quality</h1><p class="muted">Engagement-level classifier, evaluated offline on a held-out test set.</p>
+{% if m.f1 is defined %}<div class="stats"><div><b>{{ m.precision }}</b>Precision</div><div><b>{{ m.recall }}</b>Recall</div><div><b>{{ m.f1 }}</b>F1-score</div><div><b>{{ m.test }}</b>Test samples</div></div>
+<div class="card"><h3>Confusion matrix (rows: actual, columns: predicted)</h3><table class="cm"><tr><th></th>{% for l in m.labels %}<th>{{ l }}</th>{% endfor %}</tr>
+{% for row in m.matrix %}<tr><th>{{ m.labels[loop.index0] }}</th>{% for v in row %}<td>{{ v }}</td>{% endfor %}</tr>{% endfor %}</table></div>
+{% else %}<div class="card empty">{{ m.note }}</div>{% endif %}{% endblock %}

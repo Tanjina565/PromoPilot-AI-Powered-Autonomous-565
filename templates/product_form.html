@@ -1,0 +1,9 @@
+{% extends "base.html" %}{% block body %}<h1>{{ 'Edit product' if p else 'Add product' }} · {{ b.name }}</h1>
+<form method="post" class="card grid">
+<label>Name<input name="name" required value="{{ p.name if p }}"></label>
+<label>Price (৳)<input type="number" step="0.01" name="price" value="{{ p.price if p }}"></label>
+<label class="wide">Description<textarea name="description" rows="3">{{ p.description if p }}</textarea></label>
+<label>Category<input name="category" value="{{ p.category if p }}"></label>
+<label>Image URL<input name="image" value="{{ p.image if p }}"></label>
+<label class="check"><input type="checkbox" name="in_stock" {{ 'checked' if not p or p.in_stock }}> In stock</label>
+<div><button class="btn">Save product</button> <a class="btn ghost" href="{{ url_for('products', bid=b.id) }}">Cancel</a></div></form>{% endblock %}

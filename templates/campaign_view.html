@@ -1,0 +1,4 @@
+{% extends "base.html" %}{% block body %}<div class="head"><div><h1>{{ c.name }}</h1><p class="muted">{{ b.name }} · {{ c.goal }} · {{ c.start }} to {{ c.end }}</p></div><a class="btn ghost" href="{{ url_for('campaigns') }}">All campaigns</a></div>
+<table><tr><th>Slot</th><th>Idea</th><th>Draft</th><th>Status</th><th></th></tr>
+{% for r in rows %}<tr><td>{{ r.scheduled_at.replace('T',' ') }}<br><small class="muted">Predicted: {{ r.predicted_level }}</small></td><td>{{ r.pname }}</td><td>{{ r.content }}</td>
+<td><span class="pill {{ r.status }}">{{ r.status }}</span></td><td class="acts"><a class="btn ghost" href="{{ url_for('post_edit', pid=r.id) }}">Review</a></td></tr>{% endfor %}</table>{% endblock %}

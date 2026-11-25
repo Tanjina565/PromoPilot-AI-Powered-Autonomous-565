@@ -1,0 +1,14 @@
+{% extends "base.html" %}{% block body %}<h1>Generate content</h1>
+{% if not prods %}<div class="card empty">Add a business and at least one product first.</div>{% else %}
+<form method="post" class="card grid">
+<label>Business<select name="business_id" id="biz">{% for b in biz %}<option value="{{ b.id }}">{{ b.name }}</option>{% endfor %}</select></label>
+<label>Product<select name="product_id" id="prod">{% for p in prods %}<option value="{{ p.id }}" data-b="{{ p.business_id }}" {{ 'selected' if sel and sel|int==p.id }}>{{ p.name }}</option>{% endfor %}</select></label>
+<label>Content type<select name="kind"><option value="caption">Social post caption</option><option value="description">Product description</option><option value="ad">Ad copy</option><option value="sms">SMS text</option><option value="email">Email text</option></select></label>
+<label>Platform<select name="platform"><option>Facebook</option></select></label>
+<label>Tone<select name="tone"><option>friendly</option><option>professional</option><option>playful</option></select></label>
+<label>Goal<select name="goal"><option value="sale">Sale</option><option value="launch">New launch</option><option value="festival">Festival</option><option value="awareness">Awareness</option></select></label>
+<label>Language<select name="language"><option>English</option><option>Bangla</option></select></label>
+<label>Versions<select name="variants"><option value="1">1 draft</option><option value="2">2 drafts (A/B test)</option></select></label>
+<div><button class="btn">Generate draft</button></div></form>
+<p class="muted">{{ 'AI model connected.' if has_llm else 'No API key set, so drafts use built-in templates. Set ANTHROPIC_API_KEY to use the LLM.' }} Drafts are built only from your business and product details.</p>
+<script>const b=document.getElementById('biz'),p=document.getElementById('prod');function f(){let first=null;[...p.options].forEach(o=>{const s=o.dataset.b===b.value;o.hidden=!s;if(s&&!first)first=o});if(p.selectedOptions[0].hidden&&first)p.value=first.value}b.onchange=f;f();</script>{% endif %}{% endblock %}

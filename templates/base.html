@@ -1,0 +1,17 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{% block title %}PromoPilot{% endblock %}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"></head>
+<body class="{{ 'bare' if not me else '' }}">
+{% if me %}
+<aside><a class="brand" href="{{ url_for('dashboard') }}">PromoPilot</a>
+<nav>
+<a href="{{ url_for('dashboard') }}">Dashboard</a><a href="{{ url_for('businesses') }}">Businesses</a>
+<a href="{{ url_for('generate') }}">Generate content</a><a href="{{ url_for('campaigns') }}">Campaigns</a>
+<a href="{{ url_for('posts') }}">Posts &amp; history</a><a href="{{ url_for('report') }}" target="_blank">PDF report</a>
+{% if me.role == 'admin' %}<hr><a href="{{ url_for('admin_users') }}">Users</a><a href="{{ url_for('admin_model') }}">Model quality</a>{% endif %}
+</nav>
+<div class="who">{{ me.name }}<br><small>{{ me.role|capitalize }}</small><br><a href="{{ url_for('logout') }}">Log out</a></div></aside>
+{% endif %}
+<main>{% with msgs = get_flashed_messages(with_categories=true) %}{% for c, m in msgs %}<div class="flash {{ c }}">{{ m }}</div>{% endfor %}{% endwith %}
+{% block body %}{% endblock %}</main></body></html>

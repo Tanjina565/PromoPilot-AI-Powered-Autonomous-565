@@ -1,0 +1,17 @@
+{% extends "base.html" %}{% block title %}{{ 'Create account' if mode=='register' else 'Log in' }} · PromoPilot{% endblock %}
+{% block body %}<div class="split">
+<section class="pitch"><h1>Your shop's marketing, drafted for you.</h1>
+<p>Tell PromoPilot about your business and products. It writes the posts, picks the time and tracks the results. You approve everything.</p>
+<div class="sample"><small>Sample draft · Facebook · predicted engagement: High</small>
+<p>😊 Meet Cotton Kurti! Soft cotton kurti with hand-block print. Now ৳1450 at Nakshi Threads. Order today.</p>
+<p class="tags">#CottonKurti #NakshiThreads #OnlineShopBD</p>
+<p>✨ Cotton Kurti এখন Nakshi Threads এ! মূল্য ৳1450। আজই অর্ডার করুন।</p></div></section>
+<section class="card form-card"><h2>{{ 'Create your account' if mode=='register' else 'Log in' }}</h2>
+<form method="post">
+{% if mode=='register' %}<label>Your name<input name="name" required></label>{% endif %}
+<label>Email<input type="email" name="email" required></label>
+<label>Password<input type="password" name="password" required minlength="6"></label>
+<button class="btn">{{ 'Create account' if mode=='register' else 'Log in' }}</button></form>
+{% if mode=='login' %}<p class="muted">New here? <a href="{{ url_for('register') }}">Create an account</a></p>
+<p class="muted">Demo: owner@promopilot.com / owner123<br>Admin: admin@promopilot.com / admin123</p>
+{% else %}<p class="muted">Have an account? <a href="{{ url_for('login') }}">Log in</a></p>{% endif %}</section></div>{% endblock %}

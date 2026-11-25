@@ -1,0 +1,9 @@
+{% extends "base.html" %}{% block body %}<h1>{{ 'Edit business' if b else 'Add business' }}</h1>
+<form method="post" class="card grid">
+<label>Business name<input name="name" required value="{{ b.name if b }}"></label>
+<label>Category<input name="category" placeholder="Fashion, Food, Electronics…" value="{{ b.category if b }}"></label>
+<label>Target audience<input name="audience" placeholder="young women in Dhaka" value="{{ b.audience if b }}"></label>
+<label>Brand tone<select name="tone">{% for t in ['friendly','professional','playful'] %}<option {{ 'selected' if b and b.tone==t }}>{{ t }}</option>{% endfor %}</select></label>
+<label>Preferred language<select name="language">{% for l in ['English','Bangla'] %}<option {{ 'selected' if b and b.language==l }}>{{ l }}</option>{% endfor %}</select></label>
+<label>Contact details<input name="contact" value="{{ b.contact if b }}"></label>
+<div><button class="btn">Save business</button> <a class="btn ghost" href="{{ url_for('businesses') }}">Cancel</a></div></form>{% endblock %}

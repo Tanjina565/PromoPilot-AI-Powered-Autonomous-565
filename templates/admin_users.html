@@ -1,0 +1,5 @@
+{% extends "base.html" %}{% block body %}<h1>Users</h1><p class="muted">Admins can open and edit every business, product, post and campaign from the normal pages.</p>
+<table><tr><th>Name</th><th>Email</th><th>Role</th><th>Businesses</th><th>Status</th><th></th></tr>
+{% for u in items %}<tr><td>{{ u.name }}</td><td>{{ u.email }}</td><td>{{ u.role }}</td><td>{{ u.nb }}</td><td>{{ 'Active' if u.active else 'Suspended' }}</td><td class="acts">
+{% if u.id != me.id %}<form method="post" action="{{ url_for('admin_user_action', uid=u.id, action='toggle') }}"><button class="btn ghost">{{ 'Suspend' if u.active else 'Reactivate' }}</button></form>
+<form method="post" action="{{ url_for('admin_user_action', uid=u.id, action='delete') }}" onsubmit="return confirm('Remove user and all their data?')"><button class="btn danger">Remove</button></form>{% endif %}</td></tr>{% endfor %}</table>{% endblock %}

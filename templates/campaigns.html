@@ -1,0 +1,13 @@
+{% extends "base.html" %}{% block body %}<h1>Campaigns</h1>
+<div class="two"><form class="card" method="post" action="{{ url_for('campaign_new') }}"><h3>Plan a campaign</h3>
+<label>Name<input name="name" required placeholder="Eid collection"></label>
+<label>Business<select name="business_id">{% for b in biz %}<option value="{{ b.id }}">{{ b.name }}</option>{% endfor %}</select></label>
+<label>Goal<select name="goal"><option value="sale">Discount sale</option><option value="festival">Festival</option><option value="launch">New launch</option></select></label>
+<div class="pair"><label>Start<input type="date" name="start" required value="{{ today }}"></label><label>End<input type="date" name="end" required></label></div>
+<label>Products<select name="product_ids" multiple size="4" required>{% for p in prods %}<option value="{{ p.id }}">{{ p.name }}</option>{% endfor %}</select></label>
+<button class="btn">Create content calendar</button></form>
+<div class="card"><h3>Upcoming occasions</h3><p class="muted">Pick one as your campaign window. Religious festival dates are approximate.</p>
+<ul class="plain">{% for n, d in upcoming %}<li><b>{{ n }}</b> <span class="muted">{{ d }}</span></li>{% endfor %}</ul></div></div>
+<table><tr><th>Campaign</th><th>Business</th><th>Goal</th><th>Dates</th><th>Posts</th></tr>
+{% for c in items %}<tr><td><a href="{{ url_for('campaign_view', cid=c.id) }}">{{ c.name }}</a></td><td>{{ c.bname }}</td><td>{{ c.goal }}</td><td>{{ c.start }} to {{ c.end }}</td><td>{{ c.n }}</td></tr>
+{% else %}<tr><td colspan="5" class="empty">No campaigns yet.</td></tr>{% endfor %}</table>{% endblock %}

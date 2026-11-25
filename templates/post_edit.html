@@ -1,0 +1,9 @@
+{% extends "base.html" %}{% block body %}<div class="head"><div><h1>Review post</h1><p class="muted">{{ b.name }} · {{ p.kind }} · variant {{ p.variant }} · made by {{ p.source }}</p></div><span class="pill {{ p.status }}">{{ p.status }}</span></div>
+<div class="two"><form method="post" class="card"><label>Text<textarea name="content" rows="6">{{ p.content }}</textarea></label>
+<label>Hashtags<input name="hashtags" value="{{ p.hashtags }}"></label>
+<label>Publish at<input type="datetime-local" name="scheduled_at" value="{{ p.scheduled_at }}"></label><button class="btn">Save changes</button></form>
+<div class="card"><h3>ML suggestion</h3><p>Predicted engagement: <b>{{ p.predicted_level }}</b> at the suggested time.</p>
+{% if p.approved_by %}<p class="muted">Approved by {{ p.approved_by }}</p>{% endif %}{% if p.error %}<p class="err-t">{{ p.error }}</p>{% endif %}
+<div class="acts"><form method="post" action="{{ url_for('post_regen', pid=p.id) }}"><button class="btn ghost">Regenerate</button></form>
+{% if p.status=='draft' %}<form method="post" action="{{ url_for('post_action', pid=p.id, action='approve') }}"><button class="btn">Approve</button></form>{% endif %}
+<form method="post" action="{{ url_for('post_action', pid=p.id, action='delete') }}" onsubmit="return confirm('Delete draft?')"><button class="btn danger">Delete</button></form></div></div></div>{% endblock %}
